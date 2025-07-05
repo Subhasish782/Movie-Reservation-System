@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/header') %>
+  <title>Admin Dashboard</title>
+</head>
+<body>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">All Reservations</h2>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Email</th>
+          <th>Movie</th>
+          <th>Theater</th>
+          <th>Showtime</th>
+          <th>Reserved At</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% reservations.forEach(res => { %>
+          <tr>
+            <td><%= res.userId?.name || 'N/A' %></td>
+            <td><%= res.userId?.email || 'N/A' %></td>
+            <td><%= res.movieId?.title || 'N/A' %></td>
+            <td><%= res.movieId?.theater || 'N/A' %></td>
+            <td><%= new Date(res.showtime).toLocaleString() %></td>
+            <td><%= new Date(res.createdAt).toLocaleString() %></td>
+            <td>
+              <form action="/admin/reservation/delete/<%= res._id %>" method="POST" onsubmit="return confirm('Delete this reservation?')">
+                <button class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

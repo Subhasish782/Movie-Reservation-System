@@ -1,0 +1,37 @@
+movie-reservation-system/
+├── public/
+│   ├── css/
+│   │   └── style.css         ← Custom styling matching the image
+│   ├── js/
+│   │   └── main.js           ← Seat selection interactivity
+│   └── images/
+├── views/
+│   ├── partials/
+│   │   ├── header.ejs
+│   │   └── footer.ejs
+│   └── pages/
+│       ├── home.ejs
+│       ├── login.ejs
+│       ├── register.ejs
+│       ├── movie.ejs
+│       └── reserve.ejs       ← Seat booking screen (match image design)
+├── routes/
+│   ├── authRoutes.js
+│   └── movieRoutes.js
+|   |___mainRoutes.js
+├── controllers/
+│   ├── authController.js
+│   └── movieController.js
+├── models/
+│   ├── User.js
+│   └── Movie.js
+│   └── Reservation.js
+├── config/
+│   └── db.js
+├── middlewares/
+│   └── authMiddleware.js
+├── services/
+│   └── cloudinary.js
+├── .env
+├── server.js
+└── package.json

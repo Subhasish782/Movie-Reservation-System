@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/header') %>
+  <title>All Movies</title>
+  <style>
+    .movie-card {
+      height: 400px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      position: relative;
+      color: white;
+      display: flex;
+      align-items: flex-end;
+      padding: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.03);
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+      padding: 10px;
+    }
+
+    .movie-info {
+      font-size: 0.9rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    a.btn {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Now Showing</h2>
+    <div class="row">
+      <% movies.forEach(movie => { %>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="movie-card" style="background-image: url('<%= movie.posterUrl %>')">
+            <div class="overlay">
+              <h5 class="card-title"><%= movie.title %></h5>
+              <p class="movie-info"><%= movie.description %></p>
+              <p class="movie-info"><strong>Theater:</strong> <%= movie.theater %></p>
+              <p class="movie-info"><strong>Showtimes:</strong></p>
+              <ul>
+                <% movie.showtimes.forEach(time => { %>
+                  <li><%= new Date(time).toLocaleString() %></li>
+                <% }) %>
+              </ul>
+              <a href="/reserve/<%= movie._id %>" class="btn btn-light btn-sm w-100">Book Now</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

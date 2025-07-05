@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/header') %>
+  <title>Add Movie</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4 text-primary">🎬 Add New Movie</h2>
+
+    <% if (error) { %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+    <% if (success) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <form action="/admin/add-movie" method="POST" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+      <div class="mb-3">
+        <label for="title" class="form-label">Movie Title</label>
+        <input type="text" name="title" id="title" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" id="description" class="form-control" rows="3" placeholder="Write a short movie description..."></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="theater" class="form-label">Theater</label>
+        <input type="text" name="theater" id="theater" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="showtimes" class="form-label">Showtimes</label>
+        <input type="text" name="showtimes" id="showtimes" class="form-control" placeholder="e.g., 2025-07-07T14:00, 2025-07-07T18:30" required>
+        <small class="form-text text-muted">Enter showtimes as comma-separated ISO datetimes.</small>
+      </div>
+
+      <div class="mb-3">
+        <label for="poster" class="form-label">Poster Image</label>
+        <input type="file" name="poster" id="poster" class="form-control" accept="image/*" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">➕ Create Movie</button>
+    </form>
+  </div>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

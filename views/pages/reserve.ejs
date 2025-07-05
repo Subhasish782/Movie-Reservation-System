@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/header') %>
+  <title>Reserve Seats - <%= movie.title %></title>
+  <style>
+    .seat {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      border-radius: 6px;
+      background-color: #28a745;
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      cursor: pointer;
+    }
+
+    .seat.selected {
+      background-color: #ffc107;
+    }
+
+    .seat.booked {
+      background-color: #dc3545;
+      cursor: not-allowed;
+    }
+
+    .seat-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .screen {
+      height: 30px;
+      background-color: #ccc;
+      text-align: center;
+      line-height: 30px;
+      margin-bottom: 30px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">🎟 Reserve Seats for <%= movie.title %></h2>
+
+    <!-- Show flash messages -->
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success text-center"><%= success %></div>
+    <% } %>
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger text-center"><%= error %></div>
+    <% } %>
+
+    <form action="/reserve/<%= movie._id %>" method="POST">
+      <input type="hidden" name="selectedSeats" id="selectedSeats">
+      <input type="hidden" name="selectedShowtime" value="<%= movie.showtimes[0] %>">
+
+      <div class="screen">SCREEN</div>
+
+      <% const rows = ['A','B','C','D','E']; %>
+      <% for(let r = 0; r < rows.length; r++) { %>
+        <div class="seat-row">
+          <% for(let s = 1; s <= 10; s++) {
+              const seatId = `${rows[r]}${s}`;
+              const isBooked = bookedSeats.includes(seatId);
+          %>
+            <div class="seat <%= isBooked ? 'booked' : '' %>" 
+                 data-seat="<%= seatId %>">
+              <%= seatId %>
+            </div>
+          <% } %>
+        </div>
+      <% } %>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary btn-lg">Confirm Reservation</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const seatElements = document.querySelectorAll('.seat:not(.booked)');
+    const selectedSeatsInput = document.getElementById('selectedSeats');
+    let selectedSeats = [];
+
+    seatElements.forEach(seat => {
+      seat.addEventListener('click', () => {
+        const seatId = seat.getAttribute('data-seat');
+        seat.classList.toggle('selected');
+
+        if (selectedSeats.includes(seatId)) {
+          selectedSeats = selectedSeats.filter(s => s !== seatId);
+        } else {
+          selectedSeats.push(seatId);
+        }
+
+        selectedSeatsInput.value = selectedSeats.join(',');
+      });
+    });
+  </script>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

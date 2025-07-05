@@ -1,0 +1,69 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/css/style.css" />
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">🎬 MovieApp</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <!-- Always visible -->
+        <li class="nav-item">
+          <a class="nav-link" href="/movies">Movies</a>
+        </li>
+
+        <% if (session && session.userId) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/my-bookings">My Bookings</a>
+          </li>
+
+          <% if (session.role === 'admin') { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/add-movie">Add Movie</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+            </li>
+          <% } %>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+        <% } %>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ✅ Flash Messages (Success & Error) -->
+<div class="container mt-2">
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+      <%= success %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% } %>
+
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+      <%= error %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% } %>
+</div>

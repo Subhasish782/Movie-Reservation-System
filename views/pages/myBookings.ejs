@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/header') %>
+  <title>My Bookings</title>
+</head>
+<body>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">My Reservations</h2>
+
+    <% if (reservations.length === 0) { %>
+      <p class="text-center text-muted">You have no reservations yet.</p>
+    <% } else { %>
+      <div class="row">
+        <% reservations.forEach(res => { %>
+          <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <% if (res.movieId) { %>
+                  <h5><%= res.movieId.title %></h5>
+                  <p><strong>Theater:</strong> <%= res.movieId.theater %></p>
+                <% } else { %>
+                  <h5 class="text-danger">Movie Not Found</h5>
+                  <p class="text-muted">This movie may have been deleted.</p>
+                <% } %>
+                <p><strong>Reserved Seats:</strong> 
+                    <%= res.seats && Array.isArray(res.seats) ? res.seats.join(', ') : 'N/A' %>
+                </p>
+                <p><strong>Booked on:</strong> <%= new Date(res.createdAt).toLocaleString() %></p>
+                <form action="/cancel-booking/<%= res._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                    <button type="submit" class="btn btn-danger btn-sm mt-2">Cancel</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>
