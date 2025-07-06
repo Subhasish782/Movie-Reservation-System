@@ -1,8 +1,10 @@
+<!-- Meta and Styles -->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/css/style.css" />
 
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="/">🎬 MovieApp</a>
@@ -14,22 +16,24 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
 
-        <!-- Always visible -->
+        <!-- Common Link -->
         <li class="nav-item">
           <a class="nav-link" href="/movies">Movies</a>
         </li>
 
+        <!-- Logged In Users -->
         <% if (session && session.userId) { %>
           <li class="nav-item">
             <a class="nav-link" href="/my-bookings">My Bookings</a>
           </li>
 
+          <!-- Admin Controls -->
           <% if (session.role === 'admin') { %>
             <li class="nav-item">
-              <a class="nav-link" href="/admin/add-movie">Add Movie</a>
+              <a class="nav-link" href="/admin/add-movie">➕ Add Movie</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+              <a class="nav-link" href="/admin/dashboard">🛠️ Dashboard</a>
             </li>
           <% } %>
 
@@ -37,6 +41,7 @@
             <a class="nav-link" href="/logout">Logout</a>
           </li>
 
+        <!-- Guests -->
         <% } else { %>
           <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>
@@ -51,7 +56,7 @@
   </div>
 </nav>
 
-<!-- ✅ Flash Messages (Success & Error) -->
+<!-- Flash Messages -->
 <div class="container mt-2">
   <% if (success && success.length > 0) { %>
     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
